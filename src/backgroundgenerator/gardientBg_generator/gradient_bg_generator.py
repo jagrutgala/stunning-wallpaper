@@ -2,6 +2,12 @@ from abc import ABC
 from typing import List, Tuple
 from PIL import Image
 
+def gradient_generator():
+
+    def func():
+        pass
+
+    return func
 
 class GradientGenrationStrategy(ABC):
     def gen_func(self):
@@ -18,6 +24,7 @@ class GradientGenerator:
 
 
 def main():
+    from simple_gardients import horizontal_graident, vertical_gradient
     width = 1920
     height = 1080
     image_gardient = Image.new("RGB", (width, height))
@@ -28,7 +35,6 @@ def main():
         (255, 0, 255),
         (0, 255, 255)
     ]
-    from gradientgenerator.simple_gardients import horizontal_graident, vertical_gradient
     horizontal_graident(image_gardient, color_list).show()
     vertical_gradient(image_gardient, color_list).show()
 

@@ -1,5 +1,6 @@
 from abc import ABC
 from typing import List, Tuple
+from random import randint
 from PIL import Image
 
 def gradient_generator():

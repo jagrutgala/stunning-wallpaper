@@ -1,6 +1,7 @@
 import random
 import sys
 from typing import List, Optional, Tuple
+from typing_extensions import Self
 
 from PIL import Image, ImageDraw
 
@@ -55,17 +56,17 @@ class Triangle(shape.Shape):
             )
         return image
 
-
-# def get_N_triangle_rand(triangle_count: int, width: int, height: int, max_side, seed: Optional[int] = None) -> Tuple[List[Triangle], int]:
-#     if seed is None:
-#         seed = random.randrange(sys.maxsize)
-#     random.seed(seed)
-#     triangle_list: List[Triangle] = [
-#         Triangle(
-#             Triangle.get_random_center(width, height),
-#             Triangle.get_random_side(max_side),
-#             Triangle.get_random_side(max_side)
-#         )
-#         for _ in range(triangle_count)
-#     ]
-#     return (triangle_list, seed)
+    @classmethod
+    def get_N_triangle_rand(cls, triangle_count: int, width: int, height: int, max_side, seed: Optional[int] = None) -> Tuple[List[Self], int]:
+        if seed is None:
+            seed = random.randrange(sys.maxsize)
+        random.seed(seed)
+        triangle_list: List[Triangle] = [
+            cls(
+                cls.get_random_center(width, height),
+                cls.get_random_side(max_side),
+                cls.get_random_side(max_side)
+            )
+            for _ in range(triangle_count)
+        ]
+        return (triangle_list, seed)

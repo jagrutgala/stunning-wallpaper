@@ -7,8 +7,12 @@ from typing_extensions import Self
 from PIL import Image, ImageDraw
 from backgroundgenerator.shapeBg_generator.shapes.point import Point
 
-from backgroundgenerator.shapeBg_generator.shapes.shape import BoundingBoxType, PointType, RGBColorType, Shape
-
+from backgroundgenerator.shapeBg_generator.shapes.shape import (
+    BoundingBoxType,
+    PointType,
+    RGBColorType,
+    Shape,
+)
 
 class Circle(Shape):
     MIN_ARC_ANGLE = 0
@@ -20,7 +24,9 @@ class Circle(Shape):
         super().__init__(self.center.to_tuple())
 
     @staticmethod
-    def get_random_center(width: int, height: int, seed: Optional[int] = None) -> PointType:
+    def get_random_center(
+        width: int, height: int, seed: Optional[int] = None
+    ) -> PointType:
         if seed is not None:
             random.seed(seed)
         return (random.randint(0, width), random.randint(0, height))
@@ -36,47 +42,61 @@ class Circle(Shape):
             self.center.x - self.radius,
             self.center.y - self.radius,
             self.center.x + self.radius,
-            self.center.y + self.radius
+            self.center.y + self.radius,
         )
 
     def get_points(self) -> List[PointType]:
         return [
             (
                 int(self.radius * (math.cos(math.radians(t)))) + self.center.x,
-                int(self.radius * (math.sin(math.radians(t)))) + self.center.y
-            ) for t in range(0, 360, 1)
+                int(self.radius * (math.sin(math.radians(t)))) + self.center.y,
+            )
+            for t in range(0, 360, 1)
         ]
 
-    def isInsideShape(self, point: Point) -> bool:
-        dist: int = (point.x - self.center.x) * (point.x - self.center.x) + \
-            (point.y - self.center.y) * (point.y - self.center.y)
+    def is_inside_shape(self, point: PointType) -> bool:
+        p: Point = Point(*point)
+        dist: int = (p.x - self.center.x) * (p.x - self.center.x) + (
+            p.y - self.center.y
+        ) * (p.y - self.center.y)
         return dist <= (self.radius * self.radius)
 
-    def draw_on_image(self, image: Image.Image, color: RGBColorType, to_fill: Optional[bool] = False) -> Image.Image:
+    def translate(self, vector: PointType) -> Self:
+        return super().translate(vector)
+
+    def rotate(self, angle: float) -> Self:
+        return super().rotate(angle)
+
+    def draw_on_image(
+        self,
+        image: Image.Image,
+        color: RGBColorType,
+        width: int = 2,
+        to_fill: Optional[bool] = False,
+    ) -> Image.Image:
         img_draw = ImageDraw.Draw(image)
         if to_fill:
-            img_draw.polygon(
-                self.get_points(),
-                fill=color,
-                width=2
-            )
+            img_draw.polygon(self.get_points(), fill=color, width=width)
         else:
-            img_draw.polygon(
-                self.get_points(),
-                outline=color,
-                width=2
-            )
+            img_draw.polygon(self.get_points(), outline=color, width=width)
         return image
 
     @classmethod
-    def get_N_circles_rand(cls, circle_count: int, width: int, height: int, max_radius, seed: Optional[int] = None) -> Tuple[List[Self], int]:
+    def get_n_circles_rand(
+        cls,
+        circle_count: int,
+        width: int,
+        height: int,
+        max_radius,
+        seed: Optional[int] = None,
+    ) -> Tuple[List[Self], int]:
         if seed is None:
             seed = random.randrange(sys.maxsize)
         random.seed(seed)
         circle_list: List[Self] = [
             cls(
                 Point.get_rand_point(width, height)[0].to_tuple(),
-                cls.get_random_radius((max_radius))
+                cls.get_random_radius((max_radius)),
             )
             for _ in range(circle_count)
         ]

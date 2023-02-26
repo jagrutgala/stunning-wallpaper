@@ -30,7 +30,7 @@ class Rectangle(Shape):
     def get_random_side(max_side_length: int, seed: Optional[int] = None) -> int:
         if seed is not None:
             random.seed(seed)
-        return random.randint(10, max_side_length)
+        return random.randint(30, max_side_length)
 
     def get_bounding_box(self) -> BoundingBoxType:
         return (
@@ -48,7 +48,7 @@ class Rectangle(Shape):
             (self.center.x - (self.length//2), self.center.y + (self.breadth//2))
         ]
 
-    def isInsideShape(self, point: Point) -> bool:
+    def is_inside_shape(self, point: Point) -> bool:
         (x1, y1, x2, y2) = self.get_bounding_box()
         return (
             x1 < point.x < x2 and y1 < point.y < y2
@@ -71,7 +71,7 @@ class Rectangle(Shape):
         return image
 
     @classmethod
-    def get_N_rectangle_rand(cls, rectangle_count: int, width: int, height: int, max_side, seed: Optional[int] = None) -> Tuple[List[Self], int]:
+    def get_n_rectangle_rand(cls, rectangle_count: int, width: int, height: int, max_side, seed: Optional[int] = None) -> Tuple[List[Self], int]:
         if seed is None:
             seed = random.randrange(sys.maxsize)
         random.seed(seed)

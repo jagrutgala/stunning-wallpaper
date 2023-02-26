@@ -1,7 +1,8 @@
-from abc import ABC, abstractmethod
+from abc import ABC, abstractclassmethod, abstractmethod
 import random
 import sys
-from typing import List, Optional, Tuple
+from typing import Any, Callable, List, Optional, Tuple
+from typing_extensions import Self
 
 from PIL import Image
 
@@ -16,19 +17,33 @@ class Shape(ABC):
 
     @abstractmethod
     def get_points(self) -> List[PointType]:
-        pass
+        ...
 
     @abstractmethod
     def get_bounding_box(self) -> BoundingBoxType:
-        pass
+        ...
 
     @abstractmethod
-    def isInsideShape(self, point: PointType) -> bool:
-        pass
+    def is_inside_shape(self, point: PointType) -> bool:
+        ...
 
     @abstractmethod
-    def draw_on_image(self, image: Image.Image, color: RGBColorType, to_fill: Optional[bool] = False) -> Image.Image:
-        pass
+    def translate(self, vector: PointType) -> Self:
+        ...
+
+    @abstractmethod
+    def rotate(self, angle: float) -> Self:
+        ...
+
+    @abstractmethod
+    def draw_on_image(
+        self,
+        image: Image.Image,
+        color: RGBColorType,
+        width: int = 2,
+        to_fill: Optional[bool] = False,
+    ) -> Image.Image:
+        ...
 
 
 def get_rand_seed():

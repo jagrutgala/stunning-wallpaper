@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 import random
 import sys
 from typing import List, Optional, Tuple
-from colorgenerator.color import RGBColor, HSVColor, ColorType
+from colorgenerator.color import ColorType, RGBColor, HSVColor
 from colorgenerator.color_converter import ColorConverter
 
 

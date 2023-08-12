@@ -1,7 +1,7 @@
 {
     "python.defaultInterpreterPath": "venv/Scripts/python.exe",
     "terminal.integrated.env.windows": {
-        "PYTHONPATH": "${workspaceFolder}/src"
+        "PYTHONPATH": "${workspaceFolder}/stunning_wallpaper"
     },
     "python.linting.pylintArgs": [],
     "python.linting.pylintEnabled": true,

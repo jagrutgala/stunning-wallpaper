@@ -3,11 +3,11 @@ import random
 from typing import Optional, Tuple, List, Type, TypeVar
 from PIL import Image
 
-from backgroundgenerator.shapeBg_generator.shapes.shape import Shape, PointType, BoundingBoxType, RGBColorType
-from backgroundgenerator.shapeBg_generator.shapes.segment import Segment
-# from backgroundgenerator.shapeBg_generator.shapes.triangle import Triangle
-from backgroundgenerator.shapeBg_generator.shapes.rectangle import Rectangle
-from backgroundgenerator.shapeBg_generator.shapes.circle import Circle
+from backgroundgenerator.shapes.shape import Shape, PointType, BoundingBoxType, RGBColorType
+from backgroundgenerator.shapes.segment import Segment
+# from backgroundgenerator.shapes.triangle import Triangle
+from backgroundgenerator.shapes.rectangle import Rectangle
+from backgroundgenerator.shapes.circle import Circle
 
 ShapeType = TypeVar("ShapeType", bound=Shape)
 

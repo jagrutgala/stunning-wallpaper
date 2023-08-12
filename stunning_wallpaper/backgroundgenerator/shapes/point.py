@@ -5,7 +5,7 @@ from typing_extensions import Self
 
 from PIL import Image, ImageDraw
 
-from backgroundgenerator.shapeBg_generator.shapes.shape import (
+from backgroundgenerator.shapes.shape import (
     BoundingBoxType,
     PointType,
     RGBColorType,

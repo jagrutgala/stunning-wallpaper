@@ -5,9 +5,9 @@ from typing import List, Optional, Tuple
 from typing_extensions import Self
 
 from PIL import Image, ImageDraw
-from backgroundgenerator.shapeBg_generator.shapes.point import Point
+from backgroundgenerator.shapes.point import Point
 
-from backgroundgenerator.shapeBg_generator.shapes.shape import (
+from backgroundgenerator.shapes.shape import (
     BoundingBoxType,
     PointType,
     RGBColorType,
@@ -22,6 +22,13 @@ class Circle(Shape):
         self.center: Point = Point(*center)
         self.radius = radius
         super().__init__(self.center.to_tuple())
+        self.debug_message = f"{self.center.to_tuple()}-{self.radius}"
+
+    def __repr__(self) -> str:
+        return f"center: {self.center.to_tuple()} - radius: {self.radius}"
+
+    def __eq__(self, __o: Self) -> bool:
+        return self.center.to_tuple() == __o.center.to_tuple() and self.radius == __o.radius
 
     @staticmethod
     def get_random_center(
@@ -79,6 +86,8 @@ class Circle(Shape):
             img_draw.polygon(self.get_points(), fill=color, width=width)
         else:
             img_draw.polygon(self.get_points(), outline=color, width=width)
+        # text_size_point = Point(*img_draw.textsize(self.debug_message))
+        # img_draw.text((self.center.x - text_size_point.x//2, self.center.y - text_size_point.y//2), self.debug_message)
         return image
 
     @classmethod

@@ -5,13 +5,13 @@ from typing import List, Optional, Tuple
 from typing_extensions import Self
 
 from PIL import Image, ImageDraw
-from backgroundgenerator.shapeBg_generator.shapes.shape import (
+from backgroundgenerator.shapes.shape import (
     Shape,
     PointType,
     BoundingBoxType,
     RGBColorType,
 )
-from backgroundgenerator.shapeBg_generator.shapes.point import Point
+from backgroundgenerator.shapes.point import Point
 
 
 class Triangle(Shape):

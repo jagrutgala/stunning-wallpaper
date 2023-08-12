@@ -1,15 +1,15 @@
 import random
 import sys
-from tokenize import Imagnumber
 from typing import List, Optional, Tuple, Type
 import numpy as np
 from PIL import Image, ImageDraw
-from backgroundgenerator.shapeBg_generator.shapes.point import Point
-from backgroundgenerator.shapeBg_generator.shapes.circle import Circle
-from backgroundgenerator.shapeBg_generator.shapes.rectangle import Rectangle
+from backgroundgenerator.shapes.point import Point
+from backgroundgenerator.shapes.circle import Circle
+from backgroundgenerator.shapes.rectangle import Rectangle
+from backgroundgenerator.shapes.shape import Shape
 from colorgenerator.color import HSVColor, RGBColor
 from colorgenerator.color_converter import ColorConverter
-from colorgenerator.color_generator import AnalogousColorStrategy, ColorStrategy
+from colorgenerator.color_generator import AnalogousColorStrategy, ColorStrategy, StaticColorStrategy
 
 
 cc = ColorConverter()
@@ -136,17 +136,85 @@ def zig_zag_pathches(
     return image, seed
 
 
+def rand_intersecting_circle_bg(
+    image: Image.Image,
+    base_circle: Circle,
+    no_of_shapes: int,
+    color_strategy: ColorStrategy,
+    seed: Optional[int] = None,
+) -> Tuple[Image.Image, int]:
+    if seed is None:
+        seed = random.randrange(sys.maxsize)
+    random.seed(seed)
+
+    circles, _ = Circle.get_n_circles_rand(
+        no_of_shapes, image.size[0], image.size[1], 60, seed
+    )
+    circles = list(filter(lambda c: c.radius>10, circles))
+    circles = sorted(circles, key=lambda c: c.radius, reverse=True)
+    intersecting_circles: List[Circle] = [base_circle]
+    for c1 in circles:
+        icList = circles.copy()
+        for c2 in icList:
+            if c1 == c2 or c2 in intersecting_circles:
+                continue
+            check_dist = abs(c1.center.x - c2.center.x)
+            if not (check_dist < max(c1.radius, c2.radius)):
+                continue
+            if Point.calculate_distance_between(c1.center.to_tuple(), c2.center.to_tuple()) < (c1.radius + c2.radius):
+                print(f"circle passed {c1} intersecting with {c2}")
+                intersecting_circles.extend([c1, c2])
+                break
+
+    color_list: List[HSVColor] = color_strategy.getColors()
+    intersecting_circles = sorted(intersecting_circles, key=lambda c: c.radius, reverse=True)
+    print(f"drawing {len(intersecting_circles)} circles")
+    for shape in intersecting_circles:
+        rgb: RGBColor = cc.convert(random.choice(color_list), RGBColor)
+        shape.draw_on_image(image, rgb.to_tuple(), to_fill=True)
+
+    return (image, seed)
+
+
+def center_piece_and_line_bg(
+    image: Image.Image,
+    base_shape: Shape,
+    line_list: List[Shape],
+    color_strategy: ColorStrategy
+):
+    ...
+
 if __name__ == "__main__":
     # Code Here
-    tmpimage, seed = zig_zag_pathches(
+
+    # zig zag
+    tmpimage, _s = zig_zag_pathches(
         Image.new("RGB", (1920, 1080)),
         AnalogousColorStrategy(cc.convert(RGBColor(23, 73, 162), HSVColor), 20),
-        2,
+        30,
         100,
-        60,
-        1080,
+        20,
+        800,
         7967153771860395761,
     )
 
-    print(seed)
+    # rand circle
+    # tmpimage, _s = rand_circle_bg(
+    #     Image.new("RGB", (1920, 1080)),
+    #     100,
+    #     StaticColorStrategy([cc.convert(RGBColor(23, 73, 162), HSVColor)]),
+    #     # 7967153771860395761,
+    # )
+    # Circle((1920//2, 1080//2), 100).draw_on_image(tmpimage, RGBColor(23, 73, 162).to_tuple(), to_fill=True)
+
+    # intersecting circle
+    # tmpimage, _s = rand_intersecting_circle_bg(
+    #     Image.new("RGB", (1920, 1080)),
+    #     Circle((1920//2, 1080//2), 300),
+    #     250,
+    #     AnalogousColorStrategy(cc.convert(RGBColor(23, 73, 162), HSVColor), 20),
+    #     # 7967153771860395761,
+    # )
+
+    print(_s)
     tmpimage.show()

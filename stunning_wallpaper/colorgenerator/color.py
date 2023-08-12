@@ -1,5 +1,5 @@
 import math
-from typing import Tuple, Type, TypeVar, Union
+from typing import Union
 
 
 class RGBColor:

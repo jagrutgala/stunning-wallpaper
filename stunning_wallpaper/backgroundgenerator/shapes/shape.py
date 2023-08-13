@@ -1,14 +1,14 @@
-from abc import ABC, abstractclassmethod, abstractmethod
+from abc import ABC, abstractmethod
 import random
 import sys
-from typing import Any, Callable, List, Optional, Tuple
+from typing import List, Optional, Tuple, TypeAlias, TypeVar
 from typing_extensions import Self
 
 from PIL import Image
 
-PointType = Tuple[int, int]
-BoundingBoxType = Tuple[int, int, int, int]
-RGBColorType = Tuple[int, int, int]
+PointType: TypeAlias = Tuple[int, int]
+BoundingBoxType: TypeAlias = Tuple[int, int, int, int]
+RGBColorType: TypeAlias = Tuple[int, int, int]
 
 
 class Shape(ABC):
@@ -45,6 +45,8 @@ class Shape(ABC):
     ) -> Image.Image:
         ...
 
+
+ShapeType = TypeVar("ShapeType", bound=Shape)
 
 def get_rand_seed():
     return random.randrange(sys.maxsize)

@@ -2,8 +2,8 @@ from abc import ABC, abstractmethod
 import random
 import sys
 from typing import List, Optional, Tuple
-from colorgenerator.color import ColorType, RGBColor, HSVColor
-from colorgenerator.color_converter import ColorConverter
+from stunning_wallpaper.colorgenerator.color import ColorType, RGBColor, HSVColor
+from stunning_wallpaper.colorgenerator.color_converter import ColorConverter
 
 
 class ColorStrategy(ABC):

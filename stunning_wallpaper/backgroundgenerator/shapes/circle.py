@@ -1,13 +1,12 @@
 import math
 import random
 import sys
-from typing import List, Optional, Tuple
-from typing_extensions import Self
+from typing import List, Optional, Tuple, Self
 
 from PIL import Image, ImageDraw
-from backgroundgenerator.shapes.point import Point
 
-from backgroundgenerator.shapes.shape import (
+from stunning_wallpaper.backgroundgenerator.shapes.point import Point
+from stunning_wallpaper.backgroundgenerator.shapes.shape import (
     BoundingBoxType,
     PointType,
     RGBColorType,

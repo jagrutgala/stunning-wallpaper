@@ -3,13 +3,13 @@ import sys
 from typing import List, Optional, Tuple, Type
 import numpy as np
 from PIL import Image, ImageDraw
-from backgroundgenerator.shapes.point import Point
-from backgroundgenerator.shapes.circle import Circle
-from backgroundgenerator.shapes.rectangle import Rectangle
-from backgroundgenerator.shapes.shape import Shape
-from colorgenerator.color import HSVColor, RGBColor
-from colorgenerator.color_converter import ColorConverter
-from colorgenerator.color_generator import AnalogousColorStrategy, ColorStrategy, StaticColorStrategy
+from stunning_wallpaper.backgroundgenerator.shapes.point import Point
+from stunning_wallpaper.backgroundgenerator.shapes.circle import Circle
+from stunning_wallpaper.backgroundgenerator.shapes.rectangle import Rectangle
+from stunning_wallpaper.backgroundgenerator.shapes.shape import Shape
+from stunning_wallpaper.colorgenerator.color import HSVColor, RGBColor
+from stunning_wallpaper.colorgenerator.color_converter import ColorConverter
+from stunning_wallpaper.colorgenerator.color_generator import AnalogousColorStrategy, ColorStrategy, StaticColorStrategy
 
 
 cc = ColorConverter()

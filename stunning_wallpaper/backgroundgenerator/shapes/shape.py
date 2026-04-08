@@ -1,8 +1,7 @@
 from abc import ABC, abstractclassmethod, abstractmethod
 import random
 import sys
-from typing import Any, Callable, List, Optional, Tuple
-from typing_extensions import Self
+from typing import Any, Callable, List, Optional, Tuple, Self
 
 from PIL import Image
 

@@ -1,5 +1,5 @@
 from typing import Any, Callable, Tuple, Type, TypeVar
-from colorgenerator.color import RGBColor, HSLColor, HSVColor
+from stunning_wallpaper.colorgenerator.color import RGBColor, HSLColor, HSVColor
 
 T = TypeVar("T")
 
